@@ -11,15 +11,13 @@ import os
 
 # PyQt5 imports
 import PyQt5
-from PyQt5 import QtGui, uic
+from PyQt5 import QtGui, uic, QtCore, QtWidgets
 
 import sip  # must be after PyQt5.QtGui import
 
-import PyQt5.QtWidgets
 from PyQt5.QtWidgets import QPushButton, QTextEdit, QApplication, \
     QGridLayout, QHBoxLayout, QLabel, QMainWindow, QMessageBox, QVBoxLayout, QWidget
 
-import PyQt5.QtGui
 from PyQt5.QtGui import QColor
 
 # Matplotlib imports
@@ -57,6 +55,166 @@ from matplotlib.figure import Figure
 '''
 
 
+class CompiledUI(object):
+    def __init__(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(1024, 768)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName("gridLayout")
+        self.graph_view = QtWidgets.QWidget(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.graph_view.setFont(font)
+        self.graph_view.setObjectName("graph_view")
+        self.gridLayout.addWidget(self.graph_view, 2, 3, 1, 4)
+        self.point_editor = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.point_editor.sizePolicy().hasHeightForWidth())
+        self.point_editor.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.point_editor.setFont(font)
+        self.point_editor.setObjectName("point_editor")
+        self.gridLayout.addWidget(self.point_editor, 3, 0, 2, 1)
+        self.graph_label = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.graph_label.setFont(font)
+        self.graph_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.graph_label.setObjectName("graph_label")
+        self.gridLayout.addWidget(self.graph_label, 0, 3, 1, 3)
+        self.add_point_field = QtWidgets.QLineEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.add_point_field.sizePolicy().hasHeightForWidth())
+        self.add_point_field.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.add_point_field.setFont(font)
+        self.add_point_field.setObjectName("add_point_field")
+        self.gridLayout.addWidget(self.add_point_field, 3, 4, 1, 1)
+        self.delete_point = QtWidgets.QPushButton(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.delete_point.setFont(font)
+        self.delete_point.setObjectName("delete_point")
+        self.gridLayout.addWidget(self.delete_point, 3, 1, 1, 1)
+        self.reset = QtWidgets.QPushButton(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.reset.setFont(font)
+        self.reset.setObjectName("reset")
+        self.gridLayout.addWidget(self.reset, 4, 1, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 3, 3, 1, 1)
+        self.upper_line = QtWidgets.QFrame(self.centralwidget)
+        self.upper_line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.upper_line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.upper_line.setObjectName("upper_line")
+        self.gridLayout.addWidget(self.upper_line, 1, 0, 1, 7)
+        self.calculate = QtWidgets.QPushButton(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.calculate.setFont(font)
+        self.calculate.setObjectName("calculate")
+        self.gridLayout.addWidget(self.calculate, 3, 6, 1, 1)
+        self.add_point = QtWidgets.QPushButton(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.add_point.setFont(font)
+        self.add_point.setObjectName("add_point")
+        self.gridLayout.addWidget(self.add_point, 3, 5, 1, 1)
+        self.points_coords_label = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.points_coords_label.setFont(font)
+        self.points_coords_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.points_coords_label.setObjectName("points_coords_label")
+        self.gridLayout.addWidget(self.points_coords_label, 0, 0, 1, 2)
+        self.help = QtWidgets.QPushButton(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.help.setFont(font)
+        self.help.setObjectName("help")
+        self.gridLayout.addWidget(self.help, 0, 6, 1, 1)
+        self.points_list_view = QtWidgets.QListWidget(self.centralwidget)
+        self.points_list_view.setObjectName("points_list_view")
+        self.gridLayout.addWidget(self.points_list_view, 2, 0, 1, 2)
+        self.autocalculate = QtWidgets.QCheckBox(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.autocalculate.setFont(font)
+        self.autocalculate.setChecked(True)
+        self.autocalculate.setObjectName("autocalculate")
+        self.gridLayout.addWidget(self.autocalculate, 4, 6, 1, 1)
+        self.gridLayout_2 = QtWidgets.QGridLayout()
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.function = QtWidgets.QLineEdit(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.function.setFont(font)
+        self.function.setFrame(False)
+        self.function.setReadOnly(True)
+        self.function.setObjectName("function")
+        self.gridLayout_2.addWidget(self.function, 0, 1, 1, 1)
+        self.fx_label = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.fx_label.setFont(font)
+        self.fx_label.setObjectName("fx_label")
+        self.gridLayout_2.addWidget(self.fx_label, 0, 0, 1, 1)
+        self.gridLayout.addLayout(self.gridLayout_2, 4, 3, 1, 3)
+        self.bottom_line = QtWidgets.QFrame(self.centralwidget)
+        self.bottom_line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.bottom_line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.bottom_line.setObjectName("bottom_line")
+        self.gridLayout.addWidget(self.bottom_line, 5, 0, 1, 7)
+        self.small_vline = QtWidgets.QFrame(self.centralwidget)
+        self.small_vline.setFrameShape(QtWidgets.QFrame.VLine)
+        self.small_vline.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.small_vline.setObjectName("small_vline")
+        self.gridLayout.addWidget(self.small_vline, 0, 2, 1, 1)
+        self.big_vline = QtWidgets.QFrame(self.centralwidget)
+        self.big_vline.setFrameShape(QtWidgets.QFrame.VLine)
+        self.big_vline.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.big_vline.setObjectName("big_vline")
+        self.gridLayout.addWidget(self.big_vline, 2, 2, 3, 1)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1024, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.statusbar.setFont(font)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "LCGP (Line closest to given points)"))
+        self.point_editor.setText(_translate("MainWindow", "Point Editor"))
+        self.graph_label.setText(_translate("MainWindow", "Plot"))
+        self.add_point_field.setPlaceholderText(_translate("MainWindow", "Format: x, y"))
+        self.delete_point.setText(_translate("MainWindow", "Delete point"))
+        self.reset.setText(_translate("MainWindow", "Reset"))
+        self.calculate.setText(_translate("MainWindow", "Calculate line"))
+        self.add_point.setText(_translate("MainWindow", "  Add point (Enter)  "))
+        self.points_coords_label.setText(_translate("MainWindow", "Points"))
+        self.help.setText(_translate("MainWindow", "Help"))
+        self.autocalculate.setText(_translate("MainWindow", "Auto-calculate"))
+        self.fx_label.setText(_translate("MainWindow", "f(x)  = "))
+
+
 class MainWindow(QMainWindow):
     """
     This is the main window of the program.
@@ -73,18 +231,9 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         # POINT SIZE IS 9 FOR ALL WIDGETS IN THIS CLASS
+        self.window = CompiledUI(self)  # load the compiled UI
 
-        try:
-            # to remove .window -> uic.loadUi(..., self)
-            self.window = uic.loadUi("{}.ui".format(os.path.join(os.getcwd(), __class__.__name__)))  # load the Designer UI
-        except FileNotFoundError:
-            raise FileNotFoundError("{}.ui not found. Please make sure it is in the same directory as the script.".format(__class__.__name__))
-
-        self.window.setMinimumSize(900, 650)  # set min size to still show axis labels
-
-        # compile the ui file with this.
-        #with open("compiledUI.py","w") as f:
-        #    uic.compileUi("MainWindow.ui",f)
+        self.setMinimumSize(900, 650)  # set min size to still show axis labels
 
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)  # init graph widget
@@ -151,7 +300,7 @@ class MainWindow(QMainWindow):
         # Main window background
         palette = QtGui.QPalette()
         palette.setColor(self.backgroundRole(), QColor(accent_0[0]))
-        self.window.setPalette(palette)
+        self.setPalette(palette)
 
         # All buttons gotta be the same !!!
         button_str = "QPushButton {{ background-color : {}; color : {}; }}".format(accent_1[0], accent_1[1])
@@ -575,7 +724,7 @@ if __name__ == '__main__':
 
         # DO NOT change the instance name. It will fuck up the point editor.
         main = MainWindow()
-        main.window.show()
+        main.show()
 
         sys.exit(app.exec_())
     else:
