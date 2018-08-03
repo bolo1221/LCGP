@@ -466,12 +466,13 @@ class PointWindow(HelpWindow):
         super(PointWindow, self).__init__()
         self.setWindowTitle("Point Editor")
         self.setMinimumSize(800, 500)
-        self.setMaximumSize(800, 500)
+        self.setMaximumSize(800, 9999)  # allow more vertical resizing -> lots of points = wanna C more
 
         sip.delete(self.okButton)  # delete ok button so we can recreate it later
 
-        self.label = QLabel("Press OK to save the points or cancel to cancel. One point per line. The parenthesis are optional. "
-                            "Example input: \n(5,6\n-9.3,10.3")
+        self.label = QLabel("Press OK to save the points or cancel to cancel. One point per line. The parenthesis are optional.\n"
+                            "Points with incorrect format will be ignored. "
+                            "Example input: \n(5,6)\n-9.3,10.3")
         self.label.setStyleSheet('QLabel { font-size: 9pt }')
         self.grid.addWidget(self.label, 0, 0)
 
