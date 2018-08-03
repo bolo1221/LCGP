@@ -522,7 +522,7 @@ class PointWindow(HelpWindow):
         MainWindow.update_list(main)  # self is main. we just pass the instance instead
         MainWindow.init_graph(main)  # reset the graph then plot points
         MainWindow.plot(main, MainWindow.points)  # same here. main = Mainwindow.self
-        MainWindow.show_status_bar_message(main, "Points added !")
+        MainWindow.show_status_bar_message(main, "Points refreshed !")
         if main.window.autocalculate.isChecked():
             MainWindow.plot(main, MainWindow.points, plot_line=True)
 
