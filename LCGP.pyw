@@ -1,3 +1,4 @@
+# ONLY TESTED ON PYTHON 3.6.5
 # pip install PyQt5
 # pip install pyqt5-tools (optional. for the Designer)
 # pip install matplotlib
@@ -562,14 +563,17 @@ def exception_hook(exctype, value, traceback):
 debug = True
 
 if __name__ == '__main__':
-    if debug:
-        sys._excepthook = sys.excepthook
-        sys.excepthook = exception_hook
+    if sys.version_info[0] >= 3:  # python 3.x.x or higher
+        if debug:
+            sys._excepthook = sys.excepthook
+            sys.excepthook = exception_hook
 
-    app = QApplication(sys.argv)  # can put [] instead of sys.argv
+        app = QApplication(sys.argv)  # can put [] instead of sys.argv
 
-    # DO NOT change the instance name. It will fuck up the point editor.
-    main = MainWindow()
-    main.window.show()
+        # DO NOT change the instance name. It will fuck up the point editor.
+        main = MainWindow()
+        main.window.show()
 
-    sys.exit(app.exec_())
+        sys.exit(app.exec_())
+    else:
+        raise Exception("Python 3 or a more recent version is required.")
