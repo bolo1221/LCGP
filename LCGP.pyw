@@ -1,4 +1,5 @@
 # ONLY TESTED ON PYTHON 3.6.5
+#
 # pip install PyQt5
 # pip install pyqt5-tools (optional. for the Designer)
 # pip install matplotlib
@@ -55,14 +56,10 @@ from matplotlib.figure import Figure
 # print(QStyleFactory.keys()) # get installed styles
 '''
 
-"""
-Put the MainWindow.ui file in the same directory as the script.
-"""
-
 
 class MainWindow(QMainWindow):
     """
-    THis is the main window of the program.
+    This is the main window of the program.
     Warning: do not change class name. it will break things. Sorry I couldn't do it otherwise...
     """
     points = []  # points the user has entered
@@ -76,15 +73,19 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         # POINT SIZE IS 9 FOR ALL WIDGETS IN THIS CLASS
-        self.window = uic.loadUi("{}.ui".format(os.path.join(os.getcwd(),__class__.__name__)))  # load the Designer UI
-
+        
+        try:
+            self.window = uic.loadUi("{}.ui".format(os.path.join(os.getcwd(),__class__.__name__)))  # load the Designer UI
+        except FileNotFoundError:
+            raise FileNotFoundError("{}.ui not found. Please make sure it is in the same directory as the script.".format(__class__.__name__))
+        
         self.window.setMinimumSize(900, 650)  # set min size to still show axis labels
 
         # compile the ui file with this
         # with open("ccc.py","w") as f:
         #    uic.compileUi("MainWindow.ui",f)
 
-        self.figure = plt.figure()  #
+        self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)  # init graph widget
         self.toolbar = NavigationToolbar(self.canvas, self.window.graph_view)  # init toolbar
 
