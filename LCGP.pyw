@@ -186,10 +186,6 @@ class MainWindow(QMainWindow):
 
             x = convert_str_to_int_float(add_point_value[0])  # get x coord and transform it
             y = convert_str_to_int_float(add_point_value[1])  # get y coord and transform it
-            if y is None:
-                self.show_status_bar_message("Invalid Format. '{}' is not a valid number".format(y))
-            if x is None:
-                self.show_status_bar_message("Invalid Format. '{}' is not a valid number".format(x))
 
             """
             MOST IMPORTANT PART OF PROGRAM
@@ -200,10 +196,14 @@ class MainWindow(QMainWindow):
                         self.points.append((x, y))
                         self.update_list()  # update list
                         self.plot(self.points)  # put point on graph
-                        self.show_status_bar_message("Point ({},{}) added!".format(x, y))
+                        self.show_status_bar_message("Added point ({},{})".format(x, y))
                         if self.window.autocalculate.isChecked():  # if auto-calculate is checked...
                             self.plot(self.points, plot_line=True)  # calculate the line
                         self.window.add_point_field.setText("")  # reset text field
+                    else:
+                        self.show_status_bar_message("Invalid Format. '{}' is not a valid number".format(add_point_value[1]))
+                else:
+                    self.show_status_bar_message("Invalid Format. '{}' is not a valid number".format(add_point_value[0]))
             else:
                 self.show_status_bar_message("Point already exists!")
                 self.window.add_point_field.setText("")  # reset text field
@@ -254,7 +254,7 @@ class MainWindow(QMainWindow):
                     # plt.ylim([axes[2], axes[3]])
 
                     if not self.window.autocalculate.isChecked():
-                        self.show_status_bar_message("Line successfully drawn !")
+                        self.show_status_bar_message("Line successfully drawn")
                     self.set_function_label(a, b)
             else:
                 if not self.window.autocalculate.isChecked():
@@ -288,7 +288,7 @@ class MainWindow(QMainWindow):
             self.update_list()
             self.show_status_bar_message("Deleted point {}".format(itemValue))
         else:
-            self.show_status_bar_message("Please select a point to delete.")
+            self.show_status_bar_message("Please select a point to delete before clicking this button")
 
     def reset_points(self):
         """
@@ -303,7 +303,7 @@ class MainWindow(QMainWindow):
             self.points = []  # reset placed points
             self.init_graph()  # put defaults for graph
             self.update_list()  # update list with nothing
-            self.show_status_bar_message("Reset successful !")
+            self.show_status_bar_message("Reset successful")
 
     def set_function_label(self, a="a", b="b"):
         """
@@ -397,7 +397,8 @@ class MainWindow(QMainWindow):
             return a, b
         except ZeroDivisionError as e:
             print_exception(e)
-            self.show_status_bar_message("Cannot draw a vertical line.")
+            if not self.window.autocalculate.isChecked():
+                self.show_status_bar_message("Cannot draw a vertical line")
             return None  # if cannot draw line return none
 
     def view_help(self):
@@ -526,7 +527,7 @@ class PointWindow(HelpWindow):
         MainWindow.update_list(main)  # self is main. we just pass the instance instead
         MainWindow.init_graph(main)  # reset the graph then plot points
         MainWindow.plot(main, MainWindow.points)  # same here. main = Mainwindow.self
-        MainWindow.show_status_bar_message(main, "Points refreshed !")
+        MainWindow.show_status_bar_message(main, "Points refreshed")
         if main.window.autocalculate.isChecked():
             MainWindow.plot(main, MainWindow.points, plot_line=True)
 
@@ -561,7 +562,7 @@ def exception_hook(exctype, value, traceback):
     sys.exit(1)
 
 
-debug = True
+debug = False
 
 if __name__ == '__main__':
     if sys.version_info[0] >= 3:  # python 3.x.x or higher
