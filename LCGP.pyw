@@ -308,7 +308,7 @@ class MainWindow(QMainWindow):
         :param a:  a part of ax+b
         :param b:  b part of ax+b
         """
-        self.window.function.setText("{}x + {}".format(a, b))
+        self.window.function.setText("{} x + {}".format(a, b))
 
     def show_status_bar_message(self, message):
         """
