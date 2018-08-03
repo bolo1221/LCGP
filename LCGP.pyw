@@ -507,12 +507,16 @@ class PointWindow(HelpWindow):
             point = point.replace("(", "").replace(")", "")
             point = point.split(",")
 
-            x = convert_str_to_int_float(point[0])
-            y = convert_str_to_int_float(point[1])
-            if x is None or y is None:
-                continue  # maybe put pop up message or something...
+            try:
+                x = convert_str_to_int_float(point[0])
+                y = convert_str_to_int_float(point[1])
+                if x is None or y is None:
+                    continue  # maybe put pop up message or something...
 
-            MainWindow.points.append((x, y))
+                MainWindow.points.append((x, y))
+
+            except IndexError as e:
+                print_exception(e)
 
         # very messy but it works alright
         MainWindow.update_list(main)  # self is main. we just pass the instance instead
@@ -553,16 +557,6 @@ def exception_hook(exctype, value, traceback):
     sys.exit(1)
 
 
-def main():
-    app = QApplication(sys.argv)  # can put [] instead of sys.argv
-
-    # DO NOT change the instance name. It will fuck up the point editor.
-    main = MainWindow()
-    main.window.show()
-
-    sys.exit(app.exec_())
-
-
 debug = True
 
 if __name__ == '__main__':
@@ -570,4 +564,10 @@ if __name__ == '__main__':
         sys._excepthook = sys.excepthook
         sys.excepthook = exception_hook
 
-    main()
+    app = QApplication(sys.argv)  # can put [] instead of sys.argv
+
+    # DO NOT change the instance name. It will fuck up the point editor.
+    main = MainWindow()
+    main.window.show()
+
+    sys.exit(app.exec_())
