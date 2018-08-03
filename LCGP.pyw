@@ -5,6 +5,7 @@
 
 
 import sys
+import os
 
 # PyQt5 imports
 import PyQt5
@@ -74,7 +75,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         # POINT SIZE IS 9 FOR ALL WIDGETS IN THIS CLASS
-        self.window = uic.loadUi("{}.ui".format(__class__.__name__))  # load the Designer UI
+        self.window = uic.loadUi("{}.ui".format(os.path.join(os.getcwd(),__class__.__name__)))  # load the Designer UI
 
         self.window.setMinimumSize(900, 650)  # set min size to still show axis labels
 
